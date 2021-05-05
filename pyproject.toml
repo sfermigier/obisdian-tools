@@ -11,6 +11,8 @@ requests = "^2.25.1"
 devtools = "^0.6.1"
 
 [tool.poetry.dev-dependencies]
+black = "^21.5b0"
+isort = "^5.8.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

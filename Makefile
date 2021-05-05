@@ -2,7 +2,7 @@
 
 
 # The package name
-PKG=ldif
+PKG=TODO
 
 
 all: test lint
@@ -92,9 +92,8 @@ lint-doc:
 format: format-py
 
 format-py:
-	docformatter -i -r src tests
-	black src tests
-	isort src tests
+	black *.py
+	isort *.py
 
 #
 # Everything else

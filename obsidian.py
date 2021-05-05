@@ -4,19 +4,18 @@ import os
 import re
 import subprocess
 import sys
+import glob
 
 import arrow
 import requests
 from devtools import debug
-# Config
-from setuptools import glob
 
+# Config
+HOME = os.environ["HOME"]
 CONFIG = {
-    "daily_notes_root": "/Users/fermigier/Documents/Notes/Daily",
+    "daily_notes_root": f"{HOME}/Documents/Notes/Daily",
     "ical_buddy_cmd": 'icalBuddy -npc -iep "title,datetime" -b -\  -po "datetime,title" -ps "|: |" eventsToday',
 }
-
-
 # End config
 
 
@@ -114,6 +113,7 @@ def get_todos(pattern):
         fi_done = find_todos_in_file(filename, pattern)
         if fi_done and "x" not in pattern:
             debug(filename, fi_done)
+            raise ("Error please investigate")
         for m in fi_done:
             if m in todos.keys():
                 continue
@@ -152,8 +152,6 @@ def generate_file(fh):
 
     done_todos = get_done_todos()
     open_todos = get_open_todos()
-
-    debug(open_todos)
 
     for task in open_todos.keys():
         if task in done_todos.keys():
