@@ -112,8 +112,9 @@ def get_todos(pattern):
     for filename in glob.glob(daily_notes + "/*.md"):
         fi_done = find_todos_in_file(filename, pattern)
         if fi_done and "x" not in pattern:
+            print("Error please investigate")
             debug(filename, fi_done)
-            raise ("Error please investigate")
+            # raise Exception("Error please investigate")
         for m in fi_done:
             if m in todos.keys():
                 continue
