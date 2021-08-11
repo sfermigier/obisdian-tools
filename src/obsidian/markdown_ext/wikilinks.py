@@ -55,7 +55,7 @@ class WikiLinksInlineProcessor(InlineProcessor):
         self.note = note
 
     def handleMatch(self, m, data):
-        from obsidian.publish import url_for
+        from obsidian.publisher import url_for
 
         link = m.group(1).strip()
 

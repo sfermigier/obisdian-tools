@@ -12,8 +12,10 @@ CONFIG = {
         "Tech/Cloud",
         "Tech/Containers",
         "Tech/Modeling",
+        "Tech/Programming techniques",
         "Tech/Python",
         "Tech/Security",
+        "Tech/Tools",
         "Tech/Web",
     ],
 }

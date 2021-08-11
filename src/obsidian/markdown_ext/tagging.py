@@ -22,7 +22,7 @@ class TaggingPreprocessor(Preprocessor):
         super().__init__()
 
     def run(self, lines):
-        from obsidian.publish import Tag
+        from obsidian.publisher import Tag
 
         new_lines = []
         for line in lines:

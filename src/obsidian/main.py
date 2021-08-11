@@ -2,7 +2,7 @@ import fire
 
 from obsidian.daily import daily
 from obsidian.lib import console
-from obsidian.publish import publish
+from obsidian.publisher import publish
 
 
 class CLI:

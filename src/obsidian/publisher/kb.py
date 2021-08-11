@@ -1,20 +1,16 @@
 from __future__ import annotations
 
 import glob
-from dataclasses import dataclass, field
-from typing import Any, Optional
-from urllib.parse import quote
+from typing import Optional
 
 from antidote import world
 from jinja2 import Environment, PackageLoader, select_autoescape
-from markdown import markdown
-from markupsafe import Markup
 
 from obsidian.config import Config
 from obsidian.lib import mkdir_p
-from obsidian.markdown_ext.linkify import LinkifyExtension
-from obsidian.markdown_ext.tagging import TaggingExtension
-from obsidian.markdown_ext.wikilinks import WikiLinkExtension
+from obsidian.publisher.note import Note
+from obsidian.publisher.tag import Tag
+from obsidian.publisher.util import url_for
 
 
 class KB:
@@ -134,84 +130,3 @@ class KB:
     def render_template(self, template_name, **ctx):
         template = self.jinja_env.get_template(template_name)
         return template.render(url_for=url_for, **ctx)
-
-
-@dataclass
-class Note:
-    source_path: str
-    kb: KB
-
-    internal_links: set[Note] = field(init=False, default_factory=set)
-    tags: set[Tag] = field(init=False, default_factory=set)
-
-    def __hash__(self):
-        return hash(self.id)
-
-    def parse(self):
-        with open(self.source_path) as input_fd:
-            source = input_fd.read()
-        extensions = [
-            TaggingExtension(note=self),
-            WikiLinkExtension(note=self),
-            "nl2br",
-            LinkifyExtension(),
-        ]
-        markdown(source, extensions=extensions)
-
-    @property
-    def id(self) -> str:
-        return self.rel_path[0:-3]
-
-    @property
-    def title(self) -> str:
-        # TODO: get the H1 if the is one
-        return self.id.split("/")[-1]
-
-    @property
-    def html(self) -> Markup:
-        with open(self.source_path) as input_fd:
-            source = input_fd.read()
-        extensions = [WikiLinkExtension(self), "nl2br", LinkifyExtension()]
-        rendered = markdown(source, extensions=extensions)
-        return Markup(rendered)
-
-    @property
-    def rel_path(self) -> str:
-        return self.source_path[len(self.kb.kb_root) :]
-
-    @property
-    def backlinks(self) -> list[Note]:
-        result = []
-        for note in self.kb.notes:
-            if self in note.internal_links:
-                result.append(note)
-
-        return result
-
-
-@dataclass(frozen=True, order=True)
-class Tag:
-    tag: str
-
-    def __str__(self):
-        return self.tag
-
-
-def url_for(obj: Any) -> str:
-    prefix = "/notes"
-
-    if isinstance(obj, Note):
-        return f"{prefix}/n/{quote(obj.id)}/"
-
-    if isinstance(obj, Tag):
-        return f"{prefix}/t/{obj.tag}/"
-
-    if isinstance(obj, str):
-        return f"{prefix}/{obj}"
-
-    raise Exception(f"Unknown type: {type(obj)}")
-
-
-def publish():
-    kb = KB()
-    kb.publish()
