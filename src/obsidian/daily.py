@@ -1,13 +1,14 @@
+import glob
 import os
 import re
 import subprocess
 import sys
-import glob
 
 import arrow
 import requests
 from antidote import world
 from devtools import debug
+
 from obsidian.config import Config
 
 
@@ -177,4 +178,3 @@ def daily():
         )
         with open(daily_notes_file, "w") as fh:
             generate_file(fh)
-

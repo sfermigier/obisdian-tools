@@ -1,6 +1,8 @@
 import fire
 import rich.console
+
 from obsidian.daily import daily
+from obsidian.publish import publish
 
 console = rich.console.Console()
 
@@ -13,10 +15,6 @@ class CLI:
     def publish(self):
         console.print("Publishing")
         publish()
-
-
-def publish():
-    console.print("...")
 
 
 def main():

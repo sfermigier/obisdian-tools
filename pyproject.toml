@@ -4,6 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Stefane Fermigier <sf@fermigier.com>"]
 packages = [{ include = "obsidian", from = "src" }]
+include = ["src/**/*"]
 
 
 [tool.poetry.dependencies]
@@ -14,11 +15,16 @@ devtools = "^0.6.1"
 antidote = "^1.0.0"
 fire = "^0.4.0"
 rich = "^10.7.0"
+Markdown = "^3.3.4"
+Jinja2 = "^3.0.1"
+types-Markdown = "^3.3.2"
+types-requests = "^2.25.6"
 
 
 [tool.poetry.dev-dependencies]
 black = "^21.5b0"
 isort = "^5.8.0"
+mypy = "^0.910"
 
 
 [tool.poetry.scripts]

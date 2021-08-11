@@ -92,8 +92,8 @@ lint-doc:
 format: format-py
 
 format-py:
-	black *.py
-	isort *.py
+	black src
+	isort src
 
 #
 # Everything else
