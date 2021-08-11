@@ -1,20 +1,21 @@
 import fire
-import rich.console
 
 from obsidian.daily import daily
+from obsidian.lib import console
 from obsidian.publish import publish
-
-console = rich.console.Console()
 
 
 class CLI:
-    def daily(self):
+    @staticmethod
+    def daily():
         console.print("Daily update")
         daily()
 
-    def publish(self):
-        console.print("Publishing")
+    @staticmethod
+    def publish():
+        console.print("Publishing...")
         publish()
+        console.print("Done!")
 
 
 def main():

@@ -1,5 +1,6 @@
-<html>
-<body>
-{{ body|safe }}
-</body>
-</html>
+{% extends "_base.j2" %}
+{% block content %}
+  <div class="content">
+    {{ body | safe }}
+  </div>
+{% endblock %}

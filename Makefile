@@ -5,8 +5,14 @@
 PKG=TODO
 
 
-all: test lint
+all: lint
 
+
+deploy:
+	obsidian publish
+	rsync -e ssh -avz dist/ web@lab.abilian.com:/srv/web/lab.abilian.com/
+
+#
 #
 # Setup
 #

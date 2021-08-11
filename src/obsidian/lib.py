@@ -5,6 +5,10 @@ import os
 from pathlib import Path
 from typing import Union
 
+import rich.console
+
+console = rich.console.Console()
+
 
 #
 # Copied from from boltons.fileutils

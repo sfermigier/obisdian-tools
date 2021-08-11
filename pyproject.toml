@@ -19,12 +19,15 @@ Markdown = "^3.3.4"
 Jinja2 = "^3.0.1"
 types-Markdown = "^3.3.2"
 types-requests = "^2.25.6"
+bleach = "^4.0.0"
+types-bleach = "^4.0.0"
 
 
 [tool.poetry.dev-dependencies]
 black = "^21.5b0"
 isort = "^5.8.0"
 mypy = "^0.910"
+watchgod = "^0.7"
 
 
 [tool.poetry.scripts]
