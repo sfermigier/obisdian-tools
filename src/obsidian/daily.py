@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import os
 import re
 import subprocess
@@ -8,20 +6,9 @@ import glob
 
 import arrow
 import requests
+from antidote import world
 from devtools import debug
-
-# Config
-HOME = os.environ["HOME"]
-CONFIG = {
-    "daily_notes_root": f"{HOME}/Documents/Notes/Daily",
-    "ical_buddy_cmd": 'icalBuddy -npc -iep "title,datetime" -b -\  -po "datetime,title" -ps "|: |" eventsToday',
-}
-# End config
-
-
-def get_config_value(key):
-    # Currently hardcoded
-    return CONFIG[key]
+from obsidian.config import Config
 
 
 def get_link_for_file(file, link_text=""):
@@ -108,7 +95,8 @@ def get_open_todos():
 def get_todos(pattern):
     todos = {}
 
-    daily_notes = get_config_value("daily_notes_root")
+    daily_notes = world.get[str](Config.DAILY_NOTES_ROOT)
+
     for filename in glob.glob(daily_notes + "/*.md"):
         fi_done = find_todos_in_file(filename, pattern)
         if fi_done and "x" not in pattern:
@@ -129,7 +117,7 @@ def get_agenda():
     # version to icalBuddy.old. The fixed version is in my Downloads folder
     # Also, you need to run it from Finder the first time using right-click Open so
     # that you can okay the binary to run on the local machine.
-    ical_buddy = get_config_value("ical_buddy_cmd")
+    ical_buddy = world.get[str](Config.ICAL_BUDDY_CMD)
     result = subprocess.getoutput(ical_buddy)
     return result
 
@@ -174,9 +162,9 @@ def generate_file(fh):
     fh.write("\n## Today's notes\n")
 
 
-def main():
+def daily():
     # Put it all together
-    daily_notes = get_config_value("daily_notes_root")
+    daily_notes = world.get[str](Config.DAILY_NOTES_ROOT)
     daily_notes_file = os.path.join(daily_notes, get_daily_notes_filename())
 
     if os.path.exists(daily_notes_file):
@@ -190,6 +178,3 @@ def main():
         with open(daily_notes_file, "w") as fh:
             generate_file(fh)
 
-
-if __name__ == "__main__":
-    main()

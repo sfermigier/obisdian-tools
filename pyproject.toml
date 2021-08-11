@@ -3,16 +3,27 @@ name = "obsidian-tools"
 version = "0.1.0"
 description = ""
 authors = ["Stefane Fermigier <sf@fermigier.com>"]
+packages = [{ include = "obsidian", from = "src" }]
+
 
 [tool.poetry.dependencies]
 python = "^3.9"
 arrow = "^1.0.3"
 requests = "^2.25.1"
 devtools = "^0.6.1"
+antidote = "^1.0.0"
+fire = "^0.4.0"
+rich = "^10.7.0"
+
 
 [tool.poetry.dev-dependencies]
 black = "^21.5b0"
 isort = "^5.8.0"
+
+
+[tool.poetry.scripts]
+obsidian = "obsidian.main:main"
+
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
