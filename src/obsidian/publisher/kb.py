@@ -73,9 +73,21 @@ class KB:
     def make_index(self):
         index = []
         notes = sorted(self.notes, key=lambda n: n.id)
+
+        visited_prefixes = set()
+        def make_title(note):
+            segments = note.id.split("/")
+            for i in range(0, len(segments)-1):
+                prefix = "/".join(segments[0:i+1])
+                if prefix in visited_prefixes:
+                    continue
+                visited_prefixes.add(prefix)
+                index.append(f"<h{i+2}>{segments[i]}</h{i+2}>\n")
+
         for note in notes:
+            make_title(note)
             url = url_for(note)
-            index.append(f"<li><a href='{url}'>{note.id}</a></li>\n")
+            index.append(f"<li><a href='{url}'>{note.title}</a></li>\n")
 
         ctx = {"body": "".join(index), "title": "Index"}
         rendered = self.render_template("page.j2", **ctx)

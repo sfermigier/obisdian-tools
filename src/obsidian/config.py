@@ -11,6 +11,7 @@ CONFIG = {
         "Projects/Cython+",
         "Tech/Cloud",
         "Tech/Containers",
+        "Tech/Machine Learning",
         "Tech/Modeling",
         "Tech/Programming techniques",
         "Tech/Python",
