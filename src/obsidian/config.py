@@ -9,6 +9,7 @@ CONFIG = {
     "URL_ROOT": "/notes/",
     "PUBLIC": [
         "Projects/Cython+",
+        "Tech/Architecture",
         "Tech/Cloud",
         "Tech/Containers",
         "Tech/Machine Learning",
@@ -17,6 +18,8 @@ CONFIG = {
         "Tech/Python",
         "Tech/Security",
         "Tech/Tools",
+        "Tech/Security",
+        "Tech/UX-UI",
         "Tech/Web",
     ],
 }
