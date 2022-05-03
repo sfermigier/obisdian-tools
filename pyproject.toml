@@ -9,25 +9,27 @@ include = ["src/**/*"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-arrow = "^1.0.3"
-requests = "^2.25.1"
-devtools = "^0.6.1"
+
 antidote = "^1.0.0"
-fire = "^0.4.0"
-rich = "^10.7.0"
-Markdown = "^3.3.4"
-Jinja2 = "^3.0.1"
-types-Markdown = "^3.3.2"
-types-requests = "^2.25.6"
+arrow = "^1.0.3"
 bleach = "^4.0.0"
-types-bleach = "^4.0.0"
+devtools = "^0.6.1"
+fire = "^0.4.0"
+jinja2 = "^3.0.1"
+markdown = "^3.3.4"
+requests = "^2.25.1"
+rich = "^10.7.0"
+mistune = "^2.0.2"
 
 
 [tool.poetry.dev-dependencies]
-black = "^21.5b0"
-isort = "^5.8.0"
-mypy = "^0.910"
-watchgod = "^0.7"
+black = "*"
+isort = "*"
+mypy = "*"
+watchgod = "*"
+
+types-bleach = "*"
+types-requests = "*"
 
 
 [tool.poetry.scripts]

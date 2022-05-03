@@ -7,7 +7,7 @@ from obsidian.publisher.note import Note
 from obsidian.publisher.tag import Tag
 
 
-def url_for(obj: Any) -> str:
+def url_for(obj: Any, type=None) -> str:
     prefix = "/notes"
 
     if isinstance(obj, Note):

@@ -3,12 +3,12 @@ from __future__ import annotations
 import typing
 from dataclasses import dataclass, field
 
-from markdown import markdown
+import mistune as mistune
 from markupsafe import Markup
+from mistune.plugins import plugin_url, plugin_task_lists
 
-from obsidian.markdown_ext.linkify import LinkifyExtension
-from obsidian.markdown_ext.tagging import TaggingExtension
-from obsidian.markdown_ext.wikilinks import WikiLinkExtension
+from obsidian.mistune_ext.tagging import TagPlugin
+from obsidian.mistune_ext.wikilinks import WikiPlugin
 from obsidian.publisher.tag import Tag
 
 if typing.TYPE_CHECKING:
@@ -29,13 +29,16 @@ class Note:
     def parse(self):
         with open(self.source_path) as input_fd:
             source = input_fd.read()
-        extensions = [
-            TaggingExtension(note=self),
-            WikiLinkExtension(note=self),
-            "nl2br",
-            LinkifyExtension(),
-        ]
-        markdown(source, extensions=extensions)
+        # extensions = [
+        #     TaggingExtension(note=self),
+        #     WikiLinkExtension(note=self),
+        #     "nl2br",
+        #     LinkifyExtension(),
+        # ]
+        # TODO: extensions
+        plugins = [plugin_url, WikiPlugin(self), TagPlugin(self)]
+        markdown = mistune.create_markdown(escape=False, plugins=plugins)
+        markdown(source)
 
     @property
     def id(self) -> str:
@@ -43,15 +46,18 @@ class Note:
 
     @property
     def title(self) -> str:
-        # TODO: get the H1 if the is one
+        # TODO: get the H1 if there is one
         return self.id.split("/")[-1]
 
     @property
     def html(self) -> Markup:
         with open(self.source_path) as input_fd:
             source = input_fd.read()
-        extensions = [WikiLinkExtension(self), "nl2br", LinkifyExtension()]
-        rendered = markdown(source, extensions=extensions)
+        # plugins = [WikiLinkExtension(self), "nl2br", LinkifyExtension()]
+
+        plugins = [plugin_url, plugin_task_lists, TagPlugin(self), WikiPlugin(self)]
+        markdown = mistune.create_markdown(escape=False, plugins=plugins)
+        rendered = markdown(source)
         return Markup(rendered)
 
     @property
@@ -66,3 +72,15 @@ class Note:
                 result.append(note)
 
         return result
+
+    def add_tag(self, name):
+        self.tags.add(Tag(name))
+
+    def add_link(self, link):
+        note = self.kb.find_note(link)
+        if not note:
+            return
+        # if not note:
+        #     return link, m.start(0), m.end(0)
+
+        self.internal_links.add(note)

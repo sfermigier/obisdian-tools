@@ -59,7 +59,7 @@ class KB:
         for note in self.notes:
             self.make_note(note)
 
-        self.make_index()
+        self.make_toc()
         self.make_tags()
 
     def make_note(self, note: Note):
@@ -70,15 +70,16 @@ class KB:
         with open(f"{dest_dir}/index.html", "w") as output_fd:
             output_fd.write(rendered)
 
-    def make_index(self):
+    def make_toc(self):
         index = []
         notes = sorted(self.notes, key=lambda n: n.id)
 
         visited_prefixes = set()
+
         def make_title(note):
             segments = note.id.split("/")
-            for i in range(0, len(segments)-1):
-                prefix = "/".join(segments[0:i+1])
+            for i in range(0, len(segments) - 1):
+                prefix = "/".join(segments[0 : i + 1])
                 if prefix in visited_prefixes:
                     continue
                 visited_prefixes.add(prefix)

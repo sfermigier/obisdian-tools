@@ -8,9 +8,15 @@ PKG=TODO
 all: lint
 
 
-deploy:
-	obsidian publish
+PHONY: deploy
+deploy: build
+	PYTHONPATH=. obsidian publish
 	rsync -e ssh -avz dist/ web@lab.abilian.com:/srv/web/lab.abilian.com/
+
+
+PHONY: build
+build:
+	PYTHONPATH=. obsidian publish
 
 #
 #
